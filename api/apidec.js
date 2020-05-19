@@ -64,12 +64,18 @@ async function find(context) {
 
   const updateValue=
  `update ABC
-   set NAME = :NAME,
+   set ID = :ID,
+   NAME = :NAME,
     AGE = :AGE
   where ID = :ID`;
  
 async function update(emp) {
-  const employee = Object.assign({}, emp);
+  const employee = {};
+
+    employee.ID = emp.ID;
+    employee.NAME = emp.NAME;
+    employee.AGE = emp.AGE;
+
   const result = await index.simpleExecute(updateValue, employee);
  
   if (result.rowsAffected && result.rowsAffected === 1) {
@@ -80,3 +86,23 @@ async function update(emp) {
 }
  
 module.exports.update = update;
+
+
+
+
+const deleteValue =
+ `delete from ABC
+  where ID = :ID`;
+ 
+
+async function del(employee) {
+  let emp = {};
+
+  emp.ID = employee;
+
+  const result = await index.simpleExecute(deleteValue, emp);
+ 
+  return result;
+}
+ 
+module.exports.del = del;

@@ -42,16 +42,18 @@ function getEmployee(req) {
   employee.NAME = req.body.NAME;
   employee.AGE = req.body.AGE;
   
- 
+  // console.log(employee);
   return employee;
 }
 
 
 router.post('/insert',async (req, res, next) => 
 {
+  // console.log(req.body.ID);
   try
   {
     let employees = getEmployee(req);
+    // console.log(employees);
  
     const employee = await apidec.create(employees);
     
@@ -67,24 +69,44 @@ router.post('/insert',async (req, res, next) =>
 
 
 
-
 router.put('/update',async(req, res, next) => {
+
   try {
+
     let employee = getEmployee(req);
+  
+    const employees = await apidec.update(employee);
  
-    employee.ID = parseInt(req.params.ID, 10);
- 
-    employee = await apidec.update(employee);
- 
-    if (employee !== null) {
-      res.json(employee);
+    if (employees !== null) {
+      res.json(employees);
     } else {
-      res.status(404).end();
+      res.send("Error");
     }
   } catch (err) {
     next(err);
   }
 });
+
+
+
+
+router.delete('/delete',async (req, res, next) => {
+  try {
+
+    let employee = req.body.ID;
+ 
+    const success = await apidec.del(employee);
+ 
+    if (success) {
+      res.json(success);
+    } else {
+      res.send("Error");
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+ 
 
 
 
