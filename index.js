@@ -1,6 +1,6 @@
 const oracledb = require('oracledb');
 const express = require('express');
-const router = express.Router();
+// const router = express.Router();
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
 const apidec = require('./api/apidec');
@@ -23,7 +23,7 @@ app.listen(400, (err) =>
 
 
 app.get('/', (req,res) => {
-	res.send("Hello World");
+	res.json("Hello World");
 });
 
 
@@ -66,6 +66,10 @@ const route = require('./Router/routes');
 //Using the routes
 app.use('/Route', route);
 
+// const file = require('./multer.js');
+
+// app.use('/File', file);
+
 
 
 
@@ -77,12 +81,13 @@ function simpleExecute(statement, binds = [], opts = {}) {
     opts.autoCommit = true;
  
     try {
-      conn = await oracledb.getConnection();
+      // conn = await oracledb.getConnection();
  
-      const result = await conn.execute(statement, binds, opts);
+      const result = await connection.execute(statement, binds, opts);
  
       resolve(result);
-    } catch (err) {
+    } 
+    catch (err) {
       reject(err);
     }
     //  finally 
