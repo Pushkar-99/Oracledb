@@ -1,6 +1,6 @@
-// var supertest = require('supertest');
+var supertest = require('supertest');
 // const expect = require('chai').expect;
-// var api = supertest('http://localhost:400/Route');
+var api = supertest('http://localhost:400/Route');
 
 
 // describe('Homepage', function() {
@@ -13,41 +13,70 @@
 // });
 
 
-// describe('Get user details', function(){
+describe('Fetch user details', function(){
 
-// 	it('User id', function(done){
-// 		api.get('/id/:ID')
-// 		.set('Accept', 'application/json')
-// 		.expect('Content-Type', 'application/json/')
-// 		.expect(200)
-// 		.then((res) => {
-// 			expect(res.params.ID).to.be.a('array');
-// 			console.log(res.params.ID);
-			
-// 		}, done())
-// 		.catch((err) =>  {
-// 			expect("Error");
-// 		});
-// 	});
-// });
+	it('User id', function(done){
+		api.get('/id/:ID')
+		.send({ID: 2})
+		.set('Accept', 'application/json')
+		.expect('Content-Type', '/json/')
+		.expect(200)
+		.end(function(err, res) {
+			if(err)
+				throw err
+			console.log('Test Passed')
+		}, done());
+	});
+});
 
 
 
 // describe('Insert user details', function(){
 
-// 	it('Insert data of user', function(done){
-// 		// supertest(app)
-// 		api.get('/insert')
+// 	it('Insert data', function(done){
+// 		api.post('/insert')
+// 		.send({ID: 6, NAME: 'Monica', AGE: 30})
 // 		.set('Accept', 'application/json')
 // 		.expect('Content-Type', 'application/json/')
 // 		.expect(200)
-// 		.then((res) => {
-// 			expect(res.body).to.be.a('array');
-// 			console.log(res.body);
-			
-// 		}, done())
-// 		.catch((err) =>  {
-// 			expect("Error");
-// 		})
+// 		.end(function(err, res){
+// 			if(err)
+// 				return err 
+
+// 		},done());
+// 	});
+// });
+
+
+// describe('Update user details', function(){
+
+// 	it('Update data', function(done){
+// 		api.put('/update')
+// 		.send({ID: 6, NAME: 'Monica', AGE: 35})
+// 		.set('Accept', 'application/json')
+// 		.expect('Content-Type', 'application/json/')
+// 		.expect(200)
+// 		.end(function(err, res){
+// 			if(err)
+// 				return err 
+
+// 		},done());
+// 	});
+// });
+
+
+// describe('Delete user details', function(){
+
+// 	it('Delete data', function(done){
+// 		api.delete('/delete')
+// 		.send({ID: 6})
+// 		.set('Accept', 'application/json')
+// 		.expect('Content-Type', 'application/json/')
+// 		.expect(200)
+// 		.end(function(err, res){
+// 			if(err)
+// 				return err 
+
+// 		},done());
 // 	});
 // });
