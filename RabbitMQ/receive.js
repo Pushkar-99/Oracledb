@@ -1,5 +1,6 @@
 const amqp = require('amqplib/callback_api');
 
+//To receive Message from Sender
 amqp.connect('amqp://localhost',(err, connection) => {
     if (err) {
         throw err;

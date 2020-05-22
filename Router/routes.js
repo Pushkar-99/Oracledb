@@ -4,6 +4,7 @@ const multer = require('multer');
 const router = express.Router();
 const app = express();
 
+//Get API to fetch values from Database.
 router.get('/id/:ID', async (req, res, next) => {
   try
   {
@@ -34,6 +35,7 @@ router.get('/id/:ID', async (req, res, next) => {
 
 
 
+//Function to store body parameters
 function getEmployee(req) {
 
   const employee = {};
@@ -42,18 +44,16 @@ function getEmployee(req) {
   employee.NAME = req.body.NAME;
   employee.AGE = req.body.AGE;
   
-  // console.log(employee);
   return employee;
 }
 
-
+//Post API to insert values into Database.
 router.post('/insert',async (req, res, next) => 
 {
-  // console.log(req.body.ID);
+
   try
   {
     let employees = getEmployee(req);
-    // console.log(employees);
  
     const employee = await apidec.create(employees);
     
@@ -68,7 +68,7 @@ router.post('/insert',async (req, res, next) =>
 
 
 
-
+//Put API to update values
 router.put('/update',async(req, res, next) => {
 
   try {
@@ -89,7 +89,7 @@ router.put('/update',async(req, res, next) => {
 
 
 
-
+//Delete API to delete values
 router.delete('/delete',async (req, res, next) => {
   try {
 
@@ -124,6 +124,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({storage: storage});
 
+//Post API to upload file
 router.post('/file', upload.single('file'), (req, res) => {
   try {
     res.send(req.file);

@@ -2,6 +2,7 @@ const index = require('../index');
 const oracledb = require('oracledb');
 
 
+//Get Information from database by providing ID as parameter. 
 const selectValue = 
  `select ID "ID",
     NAME "NAME",
@@ -18,7 +19,7 @@ async function find(context) {
     query += `\nwhere ID = :ID`;
   }
  
-  const result = await index.simpleExecute(query, binds);
+  const result = await index.Execute(query, binds);
  
   return result.rows;
 }
@@ -27,7 +28,7 @@ async function find(context) {
 
 
 
-
+//Insert value into Database.
   const insertValue =
  `insert into ABC(
     ID,
@@ -46,14 +47,9 @@ async function find(context) {
     emp.NAME = employee.NAME;
     emp.AGE = employee.AGE;
  
-    // emp.ID = {
-    //   dir: oracledb.BIND_OUT,
-    //  type: oracledb.NUMBER
-    // }
 
-    const result1 = await index.simpleExecute(insertValue, emp);
-    // emp.ID = result1.outBinds.ID[0];
-
+    const result1 = await index.Execute(insertValue, emp);
+    
     return emp;
   }
 
@@ -61,11 +57,10 @@ async function find(context) {
 
 
 
-
+//Update Database values
   const updateValue=
  `update ABC
-   set ID = :ID,
-   NAME = :NAME,
+   set NAME = :NAME,
     AGE = :AGE
   where ID = :ID`;
  
@@ -76,7 +71,7 @@ async function update(emp) {
     employee.NAME = emp.NAME;
     employee.AGE = emp.AGE;
 
-  const result = await index.simpleExecute(updateValue, employee);
+  const result = await index.Execute(updateValue, employee);
  
   if (result.rowsAffected && result.rowsAffected === 1) {
     return employee;
@@ -89,7 +84,7 @@ module.exports.update = update;
 
 
 
-
+//Delete values from Database
 const deleteValue =
  `delete from ABC
   where ID = :ID`;
@@ -100,7 +95,7 @@ async function del(employee) {
 
   emp.ID = employee;
 
-  const result = await index.simpleExecute(deleteValue, emp);
+  const result = await index.Execute(deleteValue, emp);
  
   return result;
 }
