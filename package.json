@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./bin/www",
+    "test": "mocha 'SuperTest/test.js'"
   },
   "author": "Pushkar",
   "license": "ISC",
@@ -21,10 +22,7 @@
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
     "nodemon": "^2.0.4",
-    "oracledb": "^4.2.0"
-  },
-  "scripts":{
-    "start": "node ./bin/www",
-    "test": "mocha 'SuperTest/test.js'"
+    "oracledb": "^4.2.0",
+    "winston": "^3.2.1"
   }
 }

@@ -2,10 +2,11 @@ const express = require('express');
 const apidec = require('../api/apidec');
 const multer = require('multer');
 const router = express.Router();
+const logger = require('./logger');
 const app = express();
 
 //Get API to fetch values from Database.
-router.get('/id/:ID', async (req, res, next) => {
+router.get('/id/:ID', async (req, res,next) => {
   try
   {
     const context = {};
@@ -18,20 +19,23 @@ router.get('/id/:ID', async (req, res, next) => {
     {
       if(rows.length === 1) 
       {
+        logger.log('info',"Employee data retrieved",rows);  // Logging request on console
         res.send(rows);
-      } else 
+      } 
+      else 
       {
-        res.send("Error");
+        logger.log('error',"Error while retrieving values");
+        res.send("Error!!!");
       }
     } 
-    else
-    {
-      res.send("Error");
-    }
-  } catch (err) {
+  
+  } 
+  catch (err) {
     next(err);
   }
-});
+  });
+
+
 
 
 
@@ -48,7 +52,7 @@ function getEmployee(req) {
 }
 
 //Post API to insert values into Database.
-router.post('/insert',async (req, res, next) => 
+router.post('/insert',async (req, res,next) => 
 {
 
   try
@@ -57,10 +61,12 @@ router.post('/insert',async (req, res, next) =>
  
     const employee = await apidec.create(employees);
     
+    logger.log('info',"Data inserted",employee);
     res.send(employee);
   }
   catch (err)
   {
+    logger.log('error',"Error while inserting data",err);
     next(err);
   }
 });
@@ -78,8 +84,10 @@ router.put('/update',async(req, res, next) => {
     const employees = await apidec.update(employee);
  
     if (employees !== null) {
+      logger.log('info',"Value updated successfully",employees);
       res.json(employees);
     } else {
+      logger.log('error',"Error while updating data");
       res.send("Error");
     }
   } catch (err) {
@@ -98,8 +106,10 @@ router.delete('/delete',async (req, res, next) => {
     const success = await apidec.del(employee);
  
     if (success) {
+      logger.log('info',"Value deleted successfully",success);
       res.json(success);
     } else {
+      logger.log('error',"Error while deleting data");
       res.send("Error");
     }
   } catch (err) {
@@ -127,8 +137,10 @@ const upload = multer({storage: storage});
 //Post API to upload file
 router.post('/file', upload.single('file'), (req, res) => {
   try {
+    logger.log('info',"File uploaded successfully");
     res.send(req.file);
   }catch(err) {
+    logger.log('error',"Error while uploading file");
     res.send(400);
   }
 });

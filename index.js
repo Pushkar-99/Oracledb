@@ -1,7 +1,7 @@
 const oracledb = require('oracledb');
 const express = require('express');
 const bodyParser = require('body-parser');
-const morgan = require('morgan');
+// const morgan = require('morgan');
 const apidec = require('./api/apidec');
 const app = express();
 
@@ -10,8 +10,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 
-//To log incoming requests
-app.use(morgan('dev'));
+//To log incoming requests using Morgan
+// app.use(morgan('dev'));
 
 
 //Server Listening to Port 400
@@ -31,8 +31,8 @@ app.get('/', (req,res) => {
 
 
 
-let connection;
 // Database Connection
+let connection;
 const server = (async() => {
 try
 {
