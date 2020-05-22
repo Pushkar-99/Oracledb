@@ -19,7 +19,7 @@ router.get('/id/:ID', async (req, res,next) => {
     {
       if(rows.length === 1) 
       {
-        logger.log('info',"Employee data retrieved",rows);  // Logging request on console
+        logger.log('info',"Employee data retrieved",rows);  // Logging request on console using winston
         res.send(rows);
       } 
       else 
